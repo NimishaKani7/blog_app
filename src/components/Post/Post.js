@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { makeStyles } from '@mui/styles';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 
 const useStyles = makeStyles(() => ({
   post: {
@@ -12,13 +15,13 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   link: {
     textDecoration: 'none',
   },
   postTitle: {
-    fontFamily:'courier new' || 'cursive',
+    fontFamily: 'courier new' || 'cursive',
     fontSize: '24px',
     fontWeight: '700',
     marginTop: '15px',
@@ -32,20 +35,40 @@ const useStyles = makeStyles(() => ({
     lineHeight: '24px',
     marginTop: '15px',
     textOverflow: 'ellipsis',
-    fontFamily:'Shadows Into Light',
-  }
+    fontFamily: 'Shadows Into Light',
+  },
+  Icons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '1.5rem',
+    color: '#444'
+  },
+  Share: {
+    cursor: 'pointer',
+  },
+  BookMark: {
+    cursor: 'pointer',
+  },
+  More: {
+    cursor: 'pointer',
+  },
 }));
 
-const Post = ({post}) => {
+const Post = ({ post }) => {
   const classes = useStyles();
   return (
     <div className={classes.post}>
       <div className={classes.postInfo}>
         <Link to={`/post/${post.id}`} className={classes.link}>
           <span className={classes.postTitle}>{post.title}</span>
+          <p className={classes.postDesc}>{post.body}</p>
         </Link>
       </div>
-      <p className={classes.postDesc}>{post.body}</p>
+      <div className={classes.Icons}>
+        <ShareOutlinedIcon className={classes.Share} />
+        <BookmarkBorderIcon className={classes.BookMark} />
+        <MoreHorizOutlinedIcon className={classes.More} />
+      </div>
     </div>
   )
 }

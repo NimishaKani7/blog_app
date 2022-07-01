@@ -1,14 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FetchComments } from "../../Redux/Actions";
-// import './Comments.scss';
+import { useEffect, useState, useRef } from "react";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
-
 
 
 const useStyles = makeStyles(() => ({
@@ -46,23 +42,23 @@ const useStyles = makeStyles(() => ({
     fontFamily: 'Shadows Into Light' || 'cursive',
   },
   Body: {
-    fontFamily:'Shadows Into Light'
+    fontFamily: 'Shadows Into Light'
   },
   Input: {
     fontFamily: 'The Nautigal'
   }
 }));
 
-const Comments = ({ postId }) => {
+const Comments = ({ postId, fetchPost }) => {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [isDisplayButtons, setDisplayButtons] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [isSucessful, setSucessful] = useState(false);
+  const textInput = useRef(null);
   const fetchComments = async () => {
     let concatedArray = [];
     const { data } = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
-
     if (JSON.parse(localStorage.getItem(postId)) !== null) {
       const commentsLocalStorage = JSON.parse(localStorage.getItem(postId));
       concatedArray = data.concat(commentsLocalStorage);
@@ -101,11 +97,13 @@ const Comments = ({ postId }) => {
     localStorage.setItem(postId, JSON.stringify(commentsLocalStorage));
     setSucessful(true);
     setCommentText('');
+    textInput.current.value = "";
   }
 
   return (
     <div className="Comments">
       <h1 className={classes.h1}>Comments</h1>
+      {isSucessful ? (<div className="success"> <p>Comment added successfully</p> </div>) : ''}
       <div className={classes.Container}>
         <div className={classes.Content}>
           <div className={classes.Add}>
@@ -121,6 +119,7 @@ const Comments = ({ postId }) => {
               }}
               variant="standard"
               onChange={handleChange}
+              inputRef={textInput}
             >
             </TextField>
             {isDisplayButtons ? (<div className={classes.Send}><SendIcon className={classes.sendIcon} onClick={onSubmit} /> </div>

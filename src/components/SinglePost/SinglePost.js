@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-// import './SinglePost.scss';
 import MouseOverPopover from '../PopOver/PopOver';
 import { LoremIpsum } from 'react-lorem-ipsum';
 import { useParams } from "react-router-dom";
@@ -48,7 +47,6 @@ const useStyles = makeStyles(() => ({
   },
 
 }));
-
 
 const SinglePost = () => {
   const classes = useStyles();
@@ -104,7 +102,7 @@ const SinglePost = () => {
               </div>
             </Paper>
           </Box>
-          <Comments postId={postId} />
+          <Comments postId={postId} fetchPost={fetchPost}/>
         </div>
       )}
     </div>

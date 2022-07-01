@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination';
 import { Stack } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
 import { makeStyles } from '@mui/styles';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
   Container : {
@@ -23,26 +24,32 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '5rem',
+  },
+  EmptyData: {
+    fontFamily:  'Shadows Into Light',
+    fontSize: '2rem',
   }
 
 }));
 
 const BlogList = () => {
+  const { searchStr } = useSelector((state) => state.blog)
   const [pageCount, setPageCount] = useState(1);
   const [paginatedData, setPaginatedData] = useState([]);
   const [posts, setPosts] =useState([]);
   const pageLimit = 10;
   const classes = useStyles();
-
+  const [filteredPost, setFilteredPost] = useState([]);
   const getPaginatedData = (pageNum = 1, dataArr = []) => {
     const from = (pageNum - 1) * pageLimit;
-    const blogData = !isEmpty(posts) ? posts : dataArr;
+    const blogData = !isEmpty(dataArr) ? dataArr : searchStr ? filteredPost : posts;
     const data = blogData.slice(from, from + pageLimit);
     setPaginatedData(data);
   }
+  const getPageCount = (data) => { return Math.round(data.length / pageLimit); }
   const fetchPosts = async () => {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts');
-    const pages = Math.round(data.length / pageLimit);
+    const pages = getPageCount(data)
     setPageCount(pages);
     getPaginatedData(1, data);
     setPosts(data);
@@ -51,6 +58,17 @@ const BlogList = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
+  useEffect(() => {
+    const filteredData = posts.filter(item => {
+      if(item.title.toLowerCase().includes(searchStr.toLowerCase())) {
+        return item;
+      }
+    });
+    const pages = getPageCount(filteredData);
+    setFilteredPost(filteredData)
+    setPageCount(pages);
+    getPaginatedData(1, filteredData);
+  },[searchStr])
   const handleChange = (e, value) => {
     getPaginatedData(value);
   }
@@ -66,11 +84,15 @@ const BlogList = () => {
           </div>
         </Box>
         <div className={classes.Footer}>
-          <Stack spacing={2}>
+          {!isEmpty(paginatedData) ? (
+            <Stack spacing={2}>
             <Pagination count={pageCount} onChange={handleChange} />
           </Stack>
+          ): (
+            <div className={classes.EmptyData}> No data Found </div>
+          )}
+          
         </div>
-
       </Container>
     </div>
   )

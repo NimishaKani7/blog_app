@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
@@ -6,13 +6,17 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(() => ({
   Popover: {
     margin: '2rem 0 0 2rem',
+  },
+  AuthorImage: {
+    borderRadius:'50%',
+    border: '2px solid #444',
   }
 }));
 
 
 export default function MouseOverPopover({author = {}}) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -31,7 +35,7 @@ export default function MouseOverPopover({author = {}}) {
         onMouseLeave={handlePopoverClose}
         className={classes.author}
       >
-       <img src={image} />
+       <img src={image} className={classes.AuthorImage}/>
       </Typography>
       <Popover
         id="mouse-over-popover"

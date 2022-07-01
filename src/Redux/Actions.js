@@ -13,4 +13,8 @@ export const SetLoader = (isFetching) => ({
   type: "SET_LOADER",
   payload: isFetching
 });
+export const SetSearchStr = (searchStr) => ({
+  type: "SET_SEARCH_STR",
+  payload: searchStr
+});
 
