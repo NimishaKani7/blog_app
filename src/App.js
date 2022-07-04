@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       {/* <BlogList /> */}
-      <Router>
+      <Router basename={window.location.pathname || ''}>
       <Routes>
         <Route exact path="/" element={<BlogList />} />
         <Route path = "/post/:postId" element={<SinglePost />} />
