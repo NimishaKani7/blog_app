@@ -116,7 +116,7 @@ const Header = ({search = true, home = false}) => {
     dispatch(SetSearchStr(value));
   }
   const handleClick = (e) => {
-    navigate('/');
+    navigate('/blog_app');
     home = false;
   }
   return (
