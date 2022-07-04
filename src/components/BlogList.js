@@ -14,9 +14,13 @@ import { useSelector } from 'react-redux';
 const useStyles = makeStyles(() => ({
   Container : {
     textAlign: 'center',
+    background: `#ebeef0`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: '100%',
+    padding: '8rem 0 5rem 0'
   },
   posts: {
-    margin: '8rem 0 5rem 0',
+    margin: '0 0 0 0',
   },
   Footer: {
     textAlign: 'center',
@@ -74,7 +78,7 @@ const BlogList = () => {
   }
   return (
     <div className={classes.Container}>
-      <div><Header /></div>
+      <div><Header search={true} /></div>
       <Container maxWidth="md" className="Container__Body">
         <Box sx={{ height: 'auto' }}>
           <div className={classes.posts}>

@@ -8,6 +8,8 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useSelector, useDispatch } from "react-redux";
 import { SetSearchStr } from '../../Redux/Actions';
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,11 +45,17 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  backButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    cursor: 'pointer',
+  }
 }));
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'dark', 
     primary: {
       main: '#1976d2',
     },
@@ -99,23 +107,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({search = true, home = false}) => {
   const classes = useStyles();
   const { searchStr} = useSelector((state) => state.blog);
+  const navigate= useNavigate();
   const dispatch = useDispatch();
   const handleChange = (value) => {
     dispatch(SetSearchStr(value));
   }
-  console.log(searchStr)
+  const handleClick = (e) => {
+    navigate('/');
+    home = false;
+  }
   return (
     <div className="header">
       <ThemeProvider theme={darkTheme}>
         <AppBar postion="static" className={classes.appBar}>
           <Toolbar className={classes.Toolbar}>
-            <Typography variant="h2" className={classes.h2} style={{ fontFamily: "Shadows Into Light" }}>
+            {!home ? (<Typography variant="h2" className={classes.h2} style={{ fontFamily: "Shadows Into Light" }}>
               Blog
-            </Typography>
-            <div className={classes.Search_Container}>
+            </Typography>): (
+              <Typography className={classes.backButton} onClick={handleClick}>
+              <ArrowBackIosNewOutlinedIcon /> 
+              Back
+              </Typography>
+              
+            )}
+            {search ? (
+              <div className={classes.Search_Container}>
               <div className={classes.SearchBar} >
                 <Search >
                   <div className={classes.Search_Wrapper} >
@@ -129,6 +148,7 @@ const Header = () => {
                 </Search>
               </div>
             </div>
+            ) : ''}
           </Toolbar>
         </AppBar>
       </ThemeProvider>

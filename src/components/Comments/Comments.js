@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Comments = ({ postId, fetchPost }) => {
+const Comments = ({ postId }) => {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [isDisplayButtons, setDisplayButtons] = useState(false);

@@ -9,7 +9,11 @@ const useStyles = makeStyles(() => ({
   },
   AuthorImage: {
     borderRadius:'50%',
-    border: '2px solid #444',
+    border: '1px solid #444',
+    boxShadow: '3px 3px 10px rgba(0, 0, 0, 0.2)'
+  },
+  AuthorInfo: {
+    fontSize: '0.75rem',
   }
 }));
 
@@ -55,9 +59,9 @@ export default function MouseOverPopover({author = {}}) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 2 }} className="author-info">
-          <p>{author.email} </p>
-          <p>{author.phone} </p>
+        <Typography sx={{ p: 2 }}>
+          <p  className={classes.AuthorInfo}>{author.email} </p>
+          <p  className={classes.AuthorInfo}>{author.phone} </p>
         </Typography>
       </Popover>
     </div>

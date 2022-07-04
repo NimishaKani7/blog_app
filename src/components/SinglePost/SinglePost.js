@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import MouseOverPopover from '../PopOver/PopOver';
@@ -10,6 +10,11 @@ import { useSelector, useDispatch } from "react-redux";
 import Comments from "../Comments/Comments";
 import Loader from '../Loader/Loader';
 import { makeStyles } from '@mui/styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import Header from "../Header/Header";
+
 
 const useStyles = makeStyles(() => ({
   SinglePost__Container: {
@@ -23,12 +28,12 @@ const useStyles = makeStyles(() => ({
   },
   Header: {
     padding: '2rem',
-    
-    
+
+
   },
   h1: {
-    fontFamily:'Shadows Into Light',
-      textTransform: 'capitalize',
+    fontFamily: 'Shadows Into Light',
+    textTransform: 'capitalize',
   },
   p: {
     fontFamily: 'The Nautigal' || 'cursive',
@@ -37,13 +42,29 @@ const useStyles = makeStyles(() => ({
   },
   Body: {
     display: 'flex',
-      justifyContent: 'space-around',
-      marginBottom: '3rem',
+    justifyContent: 'space-around',
+    marginBottom: '3rem',
   },
-  text_wrapper:{
+  text_wrapper: {
     margin: '0 2rem',
     textAlign: 'left',
-    fontFamily:'Shadows Into Light',
+    fontFamily: 'Shadows Into Light',
+  },
+  Icons: {
+    marginBottom: '2rem',
+    display: 'flex',
+    paddingRight: '2rem',
+    justifyContent: 'flex-end',
+    gap: '1rem'
+  },
+  Like: {
+    cursor: 'pointer',
+  },
+  Comment: {
+    cursor: 'pointer',
+  },
+  Share: {
+    cursor: 'pointer',
   },
 
 }));
@@ -69,9 +90,9 @@ const SinglePost = () => {
     fetchPost(postId);
   }, []);
 
-
   return (
     <div className={classes.SinglePost__Container}>
+      <Header search={false} home={true} />
       {isFetching ? (
         <div className={classes.Loader}>
           <Loader />
@@ -100,9 +121,14 @@ const SinglePost = () => {
                   <LoremIpsum p={2} />
                 </div>
               </div>
+              <div className={classes.Icons} >
+                <FavoriteBorderIcon className={classes.Like} />
+                <CommentOutlinedIcon className={classes.Comment} />
+                <ShareOutlinedIcon className={classes.Share} />
+              </div>
             </Paper>
           </Box>
-          <Comments postId={postId} fetchPost={fetchPost}/>
+          <Comments postId={postId} />
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
     boxShadow: '3px 3px 10px rgba(0, 0, 0, 0.2)',
     borderRadius: '5px',
     padding: '2rem',
+    background: '#fff',
   },
   postInfo: {
     display: 'flex',
@@ -21,7 +22,7 @@ const useStyles = makeStyles(() => ({
     textDecoration: 'none',
   },
   postTitle: {
-    fontFamily: 'courier new' || 'cursive',
+    fontFamily:'Shadows Into Light',
     fontSize: '24px',
     fontWeight: '700',
     marginTop: '15px',
@@ -35,7 +36,7 @@ const useStyles = makeStyles(() => ({
     lineHeight: '24px',
     marginTop: '15px',
     textOverflow: 'ellipsis',
-    fontFamily: 'Shadows Into Light',
+    // fontFamily: 'Shadows Into Light',
   },
   Icons: {
     display: 'flex',
